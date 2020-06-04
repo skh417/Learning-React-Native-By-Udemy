@@ -8,17 +8,8 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   text: {
     fontSize: 30,
+    textAlign: "center",
   },
 });
-
-export default HomeScreen;
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-
-const HomeScreen = () => {
-  return <Text>This is Home!</Text>;
-};
-
-const styles = StyleSheet.create({});
 
 export default HomeScreen;
