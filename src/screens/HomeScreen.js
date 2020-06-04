@@ -25,6 +25,18 @@ const HomeScreen = ({ navigation }) => {
           navigation.navigate("Image");
         }}
       />
+      <Button
+        title='CounterScreen'
+        onPress={() => {
+          navigation.navigate("Counter");
+        }}
+      />
+      <Button
+        title='ColorScreen'
+        onPress={() => {
+          navigation.navigate("Color");
+        }}
+      />
 
       {/* <TouchableOpacity onPress={()=>{console.log('this is TouchableOpacity')}}>
         <Text>this is touchableOpacity tag</Text>
