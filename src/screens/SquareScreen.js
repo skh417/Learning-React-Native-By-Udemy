@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useReducer } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import ColorCounter from "../components/ColorCounter";
 
 const COLOR_ICREMENT = 15;
 
 const SquareScreen = () => {
-  const [red, setRed] = useState(0);
-  const [green, setGreen] = useState(0);
-  const [blue, setBlue] = useState(0);
+  // (1) useState를 사용하는 경우
+  //   const [red, setRed] = useState(0);
+  //   const [green, setGreen] = useState(0);
+  //   const [blue, setBlue] = useState(0);
 
   //   const setColor = (color, change) => {
   //     if (color === "red") {
@@ -21,27 +22,52 @@ const SquareScreen = () => {
 
   // 위 if문 사용한 코드를 switch 문으로 바꿀 수 있다.
 
-  const setColor = (color, change) => {
-    switch (color) {
+  //   const setColor = (color, change) => {
+  //     switch (color) {
+  //       case "red":
+  //         red + change > 255 || red + change < 0 ? null : setRed(red + change);
+  //         return;
+  //       case "green":
+  //         green + change > 255 || green + change < 0
+  //           ? null
+  //           : setGreen(green + change);
+  //         return;
+  //       case "blue":
+  //         blue + change > 255 || blue + change < 0
+  //           ? null
+  //           : setBlue(blue + change);
+  //         return;
+  //       default:
+  //         return;
+  //     }
+  //   };
+
+  // (2) useReducer를 사용하는 경우
+  // useState를 사용했을대는 red, green, blue를 각각 state로 관리했지만 useReducer를 사용하면
+  // 하나의 오브젝트에 담아 state를 관리할 수 있습니다.
+
+  //reducer 함수는 일반적으로 컴포넌트 내 최상위에 만들어준다.
+  const reducer = (state, action) => {
+    // state === {red: number, green: number, blue:number}
+    // action === { colorToChange: 'red' || 'green' || 'blue', amount: 15 || -15 }
+    // action은 state를 어떻게 바꿔줄 것인가 즉, 결과적으로 바뀔 오브젝트를 의미한다.
+
+    switch (action.colorToChange) {
       case "red":
-        red + change > 255 || red + change < 0 ? null : setRed(red + change);
-        return;
+        return { ...state, red: state.red + action.amount };
       case "green":
-        green + change > 255 || green + change < 0
-          ? null
-          : setGreen(green + change);
-        return;
       case "blue":
-        blue + change > 255 || blue + change < 0
-          ? null
-          : setBlue(blue + change);
+      default:
         return;
     }
   };
 
+  const [state, dispatch] = useReducer(reducer, { red: 0, green: 0, blue: 0 });
+  console.log(state);
   return (
     <View>
-      <ColorCounter
+      {/* 아래는 useState를 사용할 때 */}
+      {/* <ColorCounter
         onIncrease={() => setColor("red", COLOR_ICREMENT)}
         onDecrease={() => setColor("red", -1 * COLOR_ICREMENT)}
         color='Red'
@@ -55,7 +81,10 @@ const SquareScreen = () => {
         onIncrease={() => setColor("blue", COLOR_ICREMENT)}
         onDecrease={() => setColor("blue", -1 * COLOR_ICREMENT)}
         color='Blue'
-      />
+      /> */}
+      <ColorCounter onIncrease={() => {}} onDecrease={() => {}} color='Red' />
+      <ColorCounter onIncrease={() => {}} onDecrease={() => {}} color='Green' />
+      <ColorCounter onIncrease={() => {}} onDecrease={() => {}} color='Blue' />
       <View
         style={{
           height: 150,
