@@ -28,7 +28,7 @@ const ColorScreen = () => {
             <View
               style={{
                 width: 420,
-                height: 60,
+                height: 50,
                 backgroundColor: item,
               }}
             />

@@ -8,7 +8,7 @@ const ImageDetail = ({ title, imgSource, price }) => {
       <Text style={styles.title}>{title}</Text>
       <Text style={{ color: "red" }}>
         PRICE{" "}
-        {price.toLocaleString("en", { style: "currency", currency: "USD" })}
+        {price.toLocaleString("en", { style: "currency", currency: "KRW" })}
       </Text>
     </View>
   );
