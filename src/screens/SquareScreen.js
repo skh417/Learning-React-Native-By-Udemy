@@ -4,6 +4,23 @@ import ColorCounter from "../components/ColorCounter";
 
 const COLOR_ICREMENT = 15;
 
+//reducer 함수는 일반적으로 컴포넌트 밖에서 만들어준다.
+const reducer = (state, action) => {
+  // state === {red: number, green: number, blue:number}
+  // action === { colorToChange: 'red' || 'green' || 'blue', amount: 15 || -15 }
+  // action은 state를 어떻게 바꿔줄 것인가 즉, 결과적으로 바뀔 오브젝트를 의미한다.
+
+  switch (action.colorToChange) {
+    case "red":
+      return { ...state, red: state.red + action.amount };
+    case "green":
+      return { ...state, green: state.green + action.amount };
+    case "blue":
+      return { ...state, blue: state.blue + action.amount };
+    default:
+      return;
+  }
+};
 const SquareScreen = () => {
   // (1) useState를 사용하는 경우
   //   const [red, setRed] = useState(0);
@@ -46,23 +63,8 @@ const SquareScreen = () => {
   // useState를 사용했을대는 red, green, blue를 각각 state로 관리했지만 useReducer를 사용하면
   // 하나의 오브젝트에 담아 state를 관리할 수 있습니다.
 
-  //reducer 함수는 일반적으로 컴포넌트 내 최상위에 만들어준다.
-  const reducer = (state, action) => {
-    // state === {red: number, green: number, blue:number}
-    // action === { colorToChange: 'red' || 'green' || 'blue', amount: 15 || -15 }
-    // action은 state를 어떻게 바꿔줄 것인가 즉, 결과적으로 바뀔 오브젝트를 의미한다.
-
-    switch (action.colorToChange) {
-      case "red":
-        return { ...state, red: state.red + action.amount };
-      case "green":
-      case "blue":
-      default:
-        return;
-    }
-  };
-
   const [state, dispatch] = useReducer(reducer, { red: 0, green: 0, blue: 0 });
+  const { red, green, blue } = state;
   console.log(state);
   return (
     <View>
@@ -82,9 +84,33 @@ const SquareScreen = () => {
         onDecrease={() => setColor("blue", -1 * COLOR_ICREMENT)}
         color='Blue'
       /> */}
-      <ColorCounter onIncrease={() => {}} onDecrease={() => {}} color='Red' />
-      <ColorCounter onIncrease={() => {}} onDecrease={() => {}} color='Green' />
-      <ColorCounter onIncrease={() => {}} onDecrease={() => {}} color='Blue' />
+      <ColorCounter
+        onIncrease={() => {
+          dispatch({ colorToChange: "red", amount: COLOR_ICREMENT });
+        }}
+        onDecrease={() => {
+          dispatch({ colorToChange: "red", amount: -1 * COLOR_ICREMENT });
+        }}
+        color='Red'
+      />
+      <ColorCounter
+        onIncrease={() => {
+          dispatch({ colorToChange: "green", amount: COLOR_ICREMENT });
+        }}
+        onDecrease={() => {
+          dispatch({ colorToChange: "green", amount: -1 * COLOR_ICREMENT });
+        }}
+        color='Green'
+      />
+      <ColorCounter
+        onIncrease={() => {
+          dispatch({ colorToChange: "blue", amount: COLOR_ICREMENT });
+        }}
+        onDecrease={() => {
+          dispatch({ colorToChange: "blue", amount: -1 * COLOR_ICREMENT });
+        }}
+        color='Blue'
+      />
       <View
         style={{
           height: 150,
